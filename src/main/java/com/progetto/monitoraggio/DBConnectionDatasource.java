@@ -13,7 +13,7 @@ public class DBConnectionDatasource {
         Connection connection;
         try {
             ctx = new InitialContext();
-            ds = (DataSource) ctx.lookup("java:comp/env/jdbc/ProgettoWSDA");
+            ds = (DataSource) ctx.lookup("java:comp/env/jdbc/progettowsda");
             connection = ds.getConnection();
         } catch (Exception exc) {
             connection = null;

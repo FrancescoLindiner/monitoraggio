@@ -20,6 +20,7 @@ public class SegnalazioneServlet extends HttpServlet {
         response.setHeader("Access-Control-Allow-Origin", "*");
         // Il client invia i dati JSON nel corpo della richiesta, non in un parametro.
         // Quindi request.getParameter() sarà sempre nullo.
+
         StringBuilder requestBody = new StringBuilder();
         try (BufferedReader reader = request.getReader()) {
             String line;
