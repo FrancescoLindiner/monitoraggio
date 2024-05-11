@@ -10,7 +10,7 @@ import java.util.*;
 
 @WebServlet(name = "queryServlet", value = "/mappa-monitoraggio")
 public class MappaMonitoraggio extends HttpServlet {
-    public static List<Impianti> query(){
+    public static List<Impianti> getInfoImpianti(){
         Connection connection;
         PreparedStatement statement;
         ResultSet rs;
@@ -37,7 +37,7 @@ public class MappaMonitoraggio extends HttpServlet {
     }
 
 
-    public static List<String> getSegnalazioniAttiveNegliUltimi2Minuti() {
+    public static List<String> getSegnalazioniAttiveNegliUltimi2Minuti() { // ritorna gli impianti attivi negli ultimi 2 min
         Connection connection;
         PreparedStatement statement;
         ResultSet rs;
@@ -69,7 +69,7 @@ public class MappaMonitoraggio extends HttpServlet {
         return segnalazioniAttive;
     }
 
-    public static List<Map<String, Object>> getTimestamp() {
+    public static List<Map<String, Object>> getUltimaSegnalazione() { // ritorna l'ultima segnalazione effettuata
         Connection connection;
         PreparedStatement statement;
         ResultSet rs;
