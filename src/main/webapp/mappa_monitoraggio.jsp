@@ -37,17 +37,28 @@
 
     <%
         List<Impianti> impianti = MappaMonitoraggio.getInfoImpianti(); // prende le info di tutit gli impianti
-
         List<String> segnalazioniAttive = MappaMonitoraggio.getSegnalazioniAttiveNegliUltimi2Minuti(); // prende gli impianti attivi negli ultimi 2 min
-
         List<Map<String, Object>> timestamp = MappaMonitoraggio.getUltimaSegnalazione(); // ritorna l'ultima segnalazione di tutti gli impianti
+    %>
+
+    <%
+        int j = 0; // variabile ausialiaria per i timestamp
 
         for (int i = 0; i < impianti.size(); i++) {
             Impianti imp = impianti.get(i);
-            String markerIcon = segnalazioniAttive.contains(imp.getId()) ? "active_icon" : "disactive_icon";
+            boolean isActive = segnalazioniAttive.contains(imp.getId());
+            String markerIcon = isActive ? "active_icon" : "disactive_icon";
+            String popupContent;
+
+            if (j < timestamp.size() && timestamp.get(j).containsKey(imp.getId())) {
+                popupContent = "ID: " + imp.getId() + "<br>" + imp.getDescrizione() + "<br>" + "Ultima segnalazione inviata: " + timestamp.get(j).get(imp.getId());
+                j++;
+            } else {
+                popupContent = "ID: " + imp.getId() + "<br>" + imp.getDescrizione() + "<br>" + "Nessuna segnalazione inviata";
+            }
     %>
     var marker = L.marker([<%= imp.getLatitudine() %>, <%= imp.getLongitudine() %>], {icon: <%= markerIcon %>}).addTo(map); // aggiunge il marker alla mappa
-    marker.bindPopup('<%= "ID: " + imp.getId() + "<br>" + imp.getDescrizione() + "<br>" + "Ultima segnalazione inviata: " + timestamp.get(i).get(imp.getId()) %>'); // aggiunge il popup
+    marker.bindPopup('<%= popupContent %>'); // aggiunge il popup
 
     marker.on('mouseover', function (e) {
         this.openPopup();
